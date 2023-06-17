@@ -1,110 +1,124 @@
-class Alumno:
-    facultad = "FES Aragón"
+class Persona:
+    descripcion = "un ser humano común y corriente"
 
-    def __init__(self, nom, ed, carr):
-        self.__nombre = nom
-        self.__edad = ed
-        self.__carrera = carr
-    def set_nombre(self,nom):
-        self.__nombre = nom
+    def __init__(self, nombre, edad):
+        self.__nombre = nombre
+        self.__edad = edad
 
-    def get_nombre(self):
+    @property
+    def nombre(self):
         return self.__nombre
 
-    def set_edad(self,ed):
-        if ed >= 8 and ed < 120:
-            self.__edad = ed
-        else:
-            print("esa edad no es corecta")
-            self.__edad = ed
-    def get_edad(self):
-        return self.__edad
-
-    def set_carrera(self, carr):
-        self.__carrera = carr
-
-    def get_carrera(self):
-        return self.__carrera
-
-
-
-    def __str__(self):
-        cadena = "--------- \n nombre: " + self.__nombre
-        cadena= cadena + "\n edad:" + str(self. __edad)
-        cadena = cadena + "\n carrera:" + self.__carrera
-        cadena = cadena + "\n --------------"
-        return cadena
-
-    def estudiar(self,horas=1):
-        print(f"el alumno {self.__nombre} esta estudiando {horas}")
-
-
-class Perro:
-    reino = "Canino"
-
-    def __init__(self, raza, edad, estatura):
-        self.__raza = raza
-        self.__edad = edad
-        self.__estatura = estatura
-
-    #metodo de acceso get
-    @property
-    def raza(self):
-        return self.__raza
-
-    #metodo de acceso set
-    @raza.setter
-    def raza(self, la_raza):
-        self.__raza = la_raza
+    @nombre.setter
+    def nombre(self, nom):
+        self.__nombre = nom
 
     @property
     def edad(self):
         return self.__edad
 
-
     @edad.setter
-    def edad(self, la_edad):
-        if la_edad > 0 and la_edad < 20:
-            self.__edad = la_edad
-        else:
-            print("esa edad no es valida")
-            self.__edad = 0
-    @property
-    def estatura(self):
-        return self.__estatura
+    def edad(self, ed):
+        self.__edad = ed
 
-
-
-    @estatura.setter
-    def estatura(self, la_estatura):
-        if la_estatura > 0.1 and la_estatura < 1.1:
-            self.__estatura = la_estatura
-        else:
-            print("no way")
-            self.__estatura = 0.1
     def __str__(self):
-        return f"""
-        __________________________
-        | RAZA : {self.__raza}          | 
-        | EDAD : {self.__edad}          | 
-        | ESTATURA : {self.__estatura}          | 
-        ----------------------------
-        """
+        return f"Nombre: {self.__nombre} Edad: {self.__edad}"
 
-
-
-
-    @staticmethod
-    def es_cachorro(edad):
-        return edad < 3
-    @staticmethod
-    def dormir(veces = 5):
-        for n in range(veces):
-            print(f"dando vuelta{n + 1}")
-        print("Zzzzzz")
+    def dormir(self):
+        print("ZzZzZzZzZzZz que calors.... zZzz")
 
     @classmethod
-    def perro_grande(cls, est):
-        if est > 0.79:
-            return cls ("",0, est)
+    def constructor_defecto(cls):
+        return cls("", 0)
 
+
+class Alumno(Persona):
+    descripcion = "Una persona que dice que estudia pero se la pasa en el cel"
+
+    def __init__(self, nombre, edad, nc, carrera):
+        Persona.__init__(self, nombre, edad)
+        self.__numero_cuenta = nc
+        self.__carrera = carrera
+
+    @property
+    def numero_cuenta(self):
+        return self.__numero_cuenta
+
+    @numero_cuenta.setter
+    def numero_cuenta(self, nc):
+        self.__numero_cuenta = nc
+
+    @property
+    def carrera(self):
+        return self.__carrera
+
+    @carrera.setter
+    def carrera(self, carrera):
+        self.__carrera = carrera
+
+    def __str__(self):
+        return super().__str__() + f", Numero de cuenta: {self.__numero_cuenta}, Carrera: {self.__carrera}"
+
+    def dormir(self):
+        print(super().nombre, " está durmiendo como alumno")
+
+    @classmethod
+    def constructor_defecto(cls):
+        return cls("", 0, "", "")
+        # Alumno.constructor_defecto
+
+
+class Profesor(Persona):
+    descripcion = "Una persona que dice que enseña pero se la pasa leyendo artículos de investigación"
+
+    def __init__(self, nombre, edad, num_tra, area):
+        Persona.__init__(self, nombre, edad)
+        self.__numero_trabajador = num_tra
+        self.__area = area
+
+    @property
+    def numero_trabajador(self):
+        return self.__numero_trabajador
+
+    @numero_trabajador.setter
+    def numero_trabajador(self, num_tra):
+        self.__numero_trabajador = num_tra
+
+    @property
+    def area(self):
+        return self.__area
+
+    @area.setter
+    def area(self, area):
+        self.__area = area
+
+    def __str__(self):
+        return super().__str__() + f", Numero de trabajador: {self.__numero_trabajador}, Area: {self.__area}"
+
+    def dormir(self):
+        print(super().nombre, " está durmiendo como profesor")
+
+
+class AyudanteProfesor(Alumno, Profesor):
+    def __init__(self, nombre, edad, nc, carr, num_tra, area, numero_horas):
+        Alumno.__init__(self, nombre, edad, nc, carr)
+        Profesor.__init__(self, nombre, edad, num_tra, area)
+        self.__horas = numero_horas
+
+    @property
+    def horas(self):
+        return self.__horas
+
+    @horas.setter
+    def horas(self, h):
+        self.__horas = h
+
+    def __str__(self):
+        return Alumno.__str__(self) + str(self.numero_trabajador) + self.area + f"Horas de trabajo: {self.horas}"
+
+    def dar_clase(self, materia):
+        print(f"{self.nombre} esta dando {materia} del area {self.area} por {self.horas} horas")
+
+    def dormir(self):
+        Alumno.dormir(self)
+        Profesor.dormir(self)

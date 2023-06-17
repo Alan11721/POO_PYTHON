@@ -1,34 +1,32 @@
-from cosas import Alumno, Perro
-
-
+from cosas import *
 def main():
-    al1 = Alumno("jose", 19, "ICO")
-    print(vars(al1))
-    al1.__nombre = "diego"
-    print(vars(al1))
-    al1.set_nombre("maria")
-    print(vars(al1))
-    print("------To string ------")
-    print(al1)
-    al1.set_edad(999)
-    print(al1)
-    al1.estudiar(4)
+    per1 = Persona ("José", 19)
+    print(per1)
+    print (Persona.descripcion)
 
-    print("------- PERRO --------")
-    perro1 = Perro("poddle", 2, 0.35)
-    perro1(vars(perro1))
-    perro1.raza = "de la calle"  # set en notacion pythonic
-    print(vars(perro1))
-    perro1.__raza = "otra"
-    print(vars(perro1))
-    perro1.edad = 12
-    perro1.estatura = 0.43
-    print(perro1)
-    cachorro = Perro.es_cachorro(perro1.edad)
-    print(cachorro)
-    Perro.dormir()
-    danes = Perro.perro_grande(0.8)
-    print(danes)
+    print("--- herencia alumno ---")
+    al1 = Alumno ("José", 19, "2344456456", "ICO")
+    print(al1)
+    print(Alumno.descripcion)
 
+
+    al2 = Alumno.constructor_defecto()
+    print(al2)
+    al2.nombre = "Juan"
+    print(al2)
+    al2.dormir()
+
+    print("--- herencia profe ------")
+    profe1 = Profesor ("Jesús" , 30 + 16, 363565, "Ingeniería de software")
+    print(profe1)
+    profe1.dormir()
+
+    print("---- herencia ayudante profe ----")
+
+    ayudante = AyudanteProfesor("adrian", 20 , "25252", "ICO", 23223, "ing. de software",4)
+    print(ayudante)
+    ayudante.dormir()
+    ayudante.dar_clase("POO")
+    ayudante.nombre = "abraham"
 
 main()
